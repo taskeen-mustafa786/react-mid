@@ -1,8 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(30)
+
+ 
+const countHandle = ()=>{
+  setInterval(()=>{
+   
+    setCount(prev=>prev-1)
+  },1000)
+}
+  useEffect(()=>{
+    if(count<0){
+      const element = document.querySelector('#themeToggle')
+      element.classList.add('.slider')
+    }
+  },[count])
 
   return (
     <>
@@ -26,10 +40,12 @@ function App() {
       <div className="progress-bar">
         <div className="progress" id="progress"></div>
       </div>
-      <div className="timer" id="timerDisplay">30s</div>
+      <div className="timer" id="timerDisplay">{count} secs</div>
       <div className="btn-group">
-        <button id="startButton">Start Timer</button>
-        <button id="resetButton" >Reset Timer</button>
+        <button id="startButton" onClick={countHandle}>Start Timer</button>
+        <button id="resetButton" onClick={()=>{
+          setCount(30)
+        }} >Reset Timer</button>
       </div>
       <div className="message" id="messageArea"></div>
     </div>
